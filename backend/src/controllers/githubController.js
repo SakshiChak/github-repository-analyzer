@@ -22,11 +22,10 @@ export const analyzeRepository = async (req, res) => {
 			});
 		}
 
-		const contributorCount = Array.isArray(data.contributors)
-			? data.contributors.length
-			: 0;
+		const contributorCount = Array.isArray(data.contributors) ? data.contributors.length : 0;
 
-		const healthScore = calculateHealthScore(data.repository);
+		const healthScore = calculateHealthScore(data.repository, contributorCount, data.commitActivity);
+		
 
 		const cacheKey = `${owner}/${repo}`;
 		let summary = null;

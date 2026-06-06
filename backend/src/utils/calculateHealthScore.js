@@ -1,25 +1,44 @@
-// export function calculateHealthScore(repo) {
-//   let score = 0;
-
-//   score += Math.min(repo.stargazers_count / 1000, 30);
-
-//   score += Math.min(repo.forks_count / 500, 20);
-
-//   score += Math.min(repo.open_issues_count, 20);
-
-//   return Math.min(Math.round(score), 100);
-// }
-
-export const calculateHealthScore = (repo) => {
+export const calculateHealthScore = (
+  repo,
+  contributorsCount = 0,
+  commitActivity = []
+) => {
   let score = 0;
 
-  score += Math.min(repo.stargazers_count / 1000, 30);
+  // Popularity
+  score += Math.min(repo.stargazers_count / 1000, 25);
 
-  score += Math.min(repo.forks_count / 500, 20);
+  // Community adoption
+  score += Math.min(repo.forks_count / 500, 15);
 
-  score += 25;
+  // Contributors
+  score += Math.min(contributorsCount, 15);
 
-  score += 25;
+  // Recent activity
+  const lastUpdate = new Date(repo.updated_at);
+  const daysSinceUpdate =
+    (Date.now() - lastUpdate.getTime()) /
+    (1000 * 60 * 60 * 24);
+
+  if (daysSinceUpdate <= 30) score += 20;
+  else if (daysSinceUpdate <= 90) score += 15;
+  else if (daysSinceUpdate <= 180) score += 10;
+  else score += 5;
+
+  // Commit activity
+  const totalCommits = commitActivity.reduce(
+    (sum, week) => sum + week.commits,
+    0
+  );
+
+  if (totalCommits > 500) score += 25;
+  else if (totalCommits > 200) score += 20;
+  else if (totalCommits > 50) score += 15;
+  else score += 5;
+
+  // Open issues
+  if (repo.open_issues_count < 20) score += 10;
+  else if (repo.open_issues_count < 100) score += 5;
 
   return Math.min(Math.round(score), 100);
 };
