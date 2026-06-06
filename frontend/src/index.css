@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: #f1f5f9;
+}
+
+/* Custom Markdown styling for AI Summary */
+.prose-custom {
+  color: var(--color-slate-600);
+
+  & h1, & h2, & h3, & h4 {
+    font-weight: 700;
+    color: var(--color-slate-900);
+    margin-top: 0.85em;
+    margin-bottom: 0.4em;
+  }
+
+  & h1 { font-size: 1.3em; }
+  & h2 { font-size: 1.15em; }
+  & h3 { font-size: 1.05em; }
+
+  & p {
+    font-size: 13px;
+    margin: 0.6em 0;
+    line-height: 1.5;
+  }
+
+  & strong {
+    font-weight: 700;
+    color: var(--color-slate-950);
+  }
+
+  & ul, & ol {
+    margin: 0.6em 0;
+    padding-left: 1.25em;
+  }
+
+  & li {
+    font-size: 13px;
+    margin: 0.3em 0;
+    line-height: 1.5;
+  }
+
+  & ul li::marker {
+    content: '• ';
+    color: var(--color-indigo-500);
+    font-weight: bold;
+  }
+
+  /* Responsive breakpoints natively inside CSS using Tailwind v4 custom values */
+  @media (min-width: 640px) {
+    & h1 { font-size: 1.5em; }
+    & h2 { font-size: 1.25em; }
+    & h3 { font-size: 1.1em; }
+
+    & p, & li {
+      font-size: 14px;
+      margin: 0.75em 0;
+      line-height: 1.6;
+    }
+
+    & ul, & ol {
+      margin: 1em 0;
+      padding-left: 1.75em;
+    }
+  }
+}
